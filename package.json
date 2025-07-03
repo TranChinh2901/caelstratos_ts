@@ -2,20 +2,45 @@
   "name": "ts_typeorm",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "homepage": "https://github.com/TranChinh2901/ts_typeorm#readme",
+  "bugs": {
+    "url": "https://github.com/TranChinh2901/ts_typeorm/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TranChinh2901/ts_typeorm.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "dist/app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "ts-node ./src/index.ts"
+    "start": "nodemon"
   },
-  "author": "",
-  "license": "ISC",
+  "nodemonConfig": {
+    "watch": [
+      "src"
+    ],
+    "ext": "ts",
+    "ignore": [
+      "node_modules"
+    ],
+    "exec": "ts-node -r tsconfig-paths/register src/app.ts"
+  },
   "dependencies": {
-    "@types/express": "^5.0.3",
-    "@types/node": "^24.0.3",
+    "dotenv": "^17.0.0",
+    "ejs": "^3.1.10",
     "express": "^5.1.0",
-    "mysql2": "^3.14.1",
+    "mysql2": "^3.14.1"
+  },
+  "devDependencies": {
+    "@types/ejs": "^3.1.5",
+    "@types/express": "^5.0.3",
+    "@types/node": "^24.0.7",
+    "nodemon": "^3.1.10",
     "ts-node": "^10.9.2",
-    "typeorm": "^0.3.25",
+    "tsconfig-paths": "^4.2.0",
     "typescript": "^5.8.3"
   }
 }
