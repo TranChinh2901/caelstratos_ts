@@ -2,7 +2,7 @@ import express, { Request, Response } from 'express';
 import path from 'path';
 import 'dotenv/config';
 import webRoutes from './routes/web';
-// import getConnection from './config/db';
+import getConnection from './config/db';
 
 
 const app = express();
@@ -15,8 +15,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 // Sử dụng router
 app.use('/', webRoutes);
-// getConnection()
+getConnection()
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
+  // console.log(`Database connection established successfully. ${getConnection}`);
+  
 });

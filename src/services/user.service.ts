@@ -1,3 +1,4 @@
+import { PrismaClient } from "@prisma/client";
 import getConnection from "../config/db";
 
 const handleUser = async (
@@ -6,16 +7,14 @@ const handleUser = async (
     address: string
 ) => {
   // console.log(`User created: Name: ${name}, Email: ${email}, Address: ${address}`);
-  const connection = await getConnection();
-  try {
-    const sql =
-      "INSERT INTO `users`(`name`, `email`, `address`) VALUES (?, ?, ?)";
-    const values = [name, email, address];
-    const [result, fields] = await connection.execute(sql, values);
-  } catch (error) {
-    console.log(error);
-    return [];
-  }
+ const prisma = new PrismaClient()
+ await prisma.user.create({
+    data: {
+      name: name,
+      email: email,
+      address: address
+    }
+  })
 };
 const getAllUsers = async () => {
   const connection = await getConnection();
@@ -50,15 +49,14 @@ return Array.isArray(result) ? result[0] : null;
 }
 }
 const handleUpdateUser = async (id: string, name: string, email: string, address: string) => {
+ try { 
   const connection = await getConnection();
-  try {
-    const sql = 'UPDATE `users` SET `name` = ?, `email` = ?, `address` = ? WHERE `id` = ?';
-    const values = [name, email, address, id];
-    const [result, fields] = await connection.execute(sql, values);
-    return result;
-  } catch (error) {
-    console.error("Error updating user:", error);
-    return null;
-  }
-  }
+  const sql = 'UPDATE `users` SET `name` = ?, `email` = ?, `address` = ?  WHERE `id` = ? ';
+  const values = [name, email, address, id];
+  const [result, fields] = await connection.execute(sql, values);
+  return result;
+} catch (err) {
+  console.log(err);
+}
+}
 export { handleUser, getAllUsers,handleDeleteUser,getUserById, handleUpdateUser };
