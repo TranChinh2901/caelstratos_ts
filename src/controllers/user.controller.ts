@@ -4,7 +4,7 @@ import { getAllUsers, getUserById, handleDeleteUser, handleUpdateUser, handleUse
 
 const getHomePage = async (req: Request, res: Response): Promise<void> => {
     const users = await getAllUsers();
-    console.log('check users:', users);
+    // console.log('check users:', users);
     res.render('home', { 
         users: users
     });
@@ -40,16 +40,30 @@ const viewUser = async (req: Request, res: Response): Promise<void> => {
 
 const updateUser = async (req: Request, res: Response): Promise<void> => {
     const {id, name, email, address} = req.body;
-    console.log('Update data:', req.body);
-    console.log('User ID:', id);
-    
     await handleUpdateUser(id, name, email, address);
     res.redirect('/');
 }
+
+const getUpdateUserForm = async (req: Request, res: Response): Promise<void> => {
+    const {id} = req.params;
+    const user = await getUserById(id);
+    console.log('User for update:', user);
+    
+    if (!user) {
+        res.status(404).send('Không tìm thấy người dùng');
+        return;
+    }
+    
+    res.render('update-user', {
+        user: user
+    });
+}
+
 export {
     getHomePage,
     createUser,
     deleteUser,
     viewUser,
-    updateUser
+    updateUser,
+    getUpdateUserForm
 }

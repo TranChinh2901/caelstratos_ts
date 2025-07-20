@@ -3,6 +3,8 @@ import path from 'path';
 import 'dotenv/config';
 import webRoutes from './routes/web';
 import getConnection from './config/db';
+import initDatabase from './config/seed';
+
 
 
 const app = express();
@@ -17,8 +19,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/', webRoutes);
 getConnection()
 
+initDatabase()
 app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-  
-  
+  console.log(`Server is running on port http://localhost:${PORT}`);
 });
