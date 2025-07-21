@@ -1,5 +1,6 @@
 import express from 'express';
 import { createUser, deleteUser, getHomePage, getUpdateUserForm, updateUser, viewUser } from '../controllers/user.controller';
+import { getDashboardPage } from 'controllers/admin/admin.controller';
 
 const router = express.Router();
 
@@ -11,7 +12,8 @@ router.post('/create-user', createUser);
 router.post('/handle-delete-user/:id', deleteUser);
 router.get('/handle-view-user/:id', viewUser);
 router.get('/handle-update-user/:id', getUpdateUserForm);
-router.post('/handle-update-user/:id', updateUser); // Route POST để xử lý update
+router.post('/handle-update-user/:id', updateUser); 
 
-
+//dashboard
+router.get('/admin', getDashboardPage);
 export default router;
