@@ -1,6 +1,6 @@
 import express from 'express';
 import { createUser, deleteUser, getHomePage, getUpdateUserForm, updateUser, viewUser } from '../controllers/user.controller';
-import { getDashboardPage } from 'controllers/admin/admin.controller';
+import { getAdminOrderPage, getAdminProductPage, getAdminUserPage, getDashboardPage } from 'controllers/admin/admin.controller';
 
 const router = express.Router();
 
@@ -16,4 +16,7 @@ router.post('/handle-update-user/:id', updateUser);
 
 //dashboard
 router.get('/admin', getDashboardPage);
+router.get('/admin/user', getAdminUserPage); 
+router.get('/admin/product', getAdminProductPage); 
+router.get('/admin/order', getAdminOrderPage); 
 export default router;
