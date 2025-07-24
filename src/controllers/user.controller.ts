@@ -12,22 +12,22 @@ const getHomePage = async (req: Request, res: Response): Promise<void> => {
 
 const createUser = async (req: Request, res: Response): Promise<void> => {
     const {name, email, address} = req.body;
-    console.log('Data from form:', req.body);   
+    // console.log('Data from form:', req.body);   
    await handleUser(name, email, address);
     res.redirect('/'); 
-}
+}   
 const deleteUser = async (req: Request, res: Response): Promise<void> => {
     const {id} = req.params;
     await handleDeleteUser(id);
     res.redirect('/');
     console.log('Delete user with id:', id);
-}
+} 
 const viewUser = async (req: Request, res: Response): Promise<void> => {
     const {id} = req.params;
     const user = await getUserById(id);
     console.log('User details:', user);
     
-    if (!user) {
+    if (!user) {    
         res.status(404).send('Không tìm thấy người dùng');
         return;
     }
