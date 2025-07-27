@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { getAllUsers, getUserById, handleDeleteUser, handleUpdateUser, handleUser } from '../services/user.service';
+import { getAllRoles, getAllUsers, getUserById, handleDeleteUser, handleUpdateUser, handleUser } from '../services/user.service';
 
 
 const getHomePage = async (req: Request, res: Response): Promise<void> => {
@@ -9,11 +9,19 @@ const getHomePage = async (req: Request, res: Response): Promise<void> => {
         users: users
     });
 }
-
+const getCreateUserPage = async (req: Request, res: Response): Promise<void> => {
+     const roles = await getAllRoles();
+    //  console.log(roles);
+     
+     res.render('admin/user/create.ejs', { 
+        message: 'Tạo mới người dùng',
+        roles: roles
+     });
+}
 const createUser = async (req: Request, res: Response): Promise<void> => {
     const {name, email, address} = req.body;
     // console.log('Data from form:', req.body);   
-   await handleUser(name, email, address);
+   await handleUser(name, email, address); 
     res.redirect('/'); 
 }   
 const deleteUser = async (req: Request, res: Response): Promise<void> => {
@@ -65,5 +73,6 @@ export {
     deleteUser,
     viewUser,
     updateUser,
-    getUpdateUserForm
+    getUpdateUserForm,
+    getCreateUserPage
 }
