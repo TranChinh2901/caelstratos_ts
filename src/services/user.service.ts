@@ -5,7 +5,9 @@ import { prisma } from "../config/client";
 const handleUser = async (
     fullName: string, 
     email: string, 
-    address: string
+    address: string,
+    role: string = "",
+    phone: string = ""
 ) => {
  await prisma.user.create({
     data: {

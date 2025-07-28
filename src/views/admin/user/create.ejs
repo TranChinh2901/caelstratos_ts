@@ -40,7 +40,7 @@
 <div>
         <div class="container" style=" margin: 0 auto;">
         <h3>Form tạo mới users</h3>
-        <form action="/create-user" method="POST">
+        <form action="/admin/handle-create-user" method="POST" enctype="multipart/form-data">
             <div class="mb-3">
                 <label  class="form-label">Full name</label>
                 <input type="text" class="form-control"  name="fullname"  required>
@@ -52,7 +52,7 @@
   </div>
   <div class="mb-3 col-6">  
     <label  class="form-label">Role</label>
-    <select  class="form-select">
+    <select name="role" class="form-select">
         <option value="">...</option>
        <% roles.forEach((role, index) => { %>
          <option value="<%= role.id %>"><%= role.name %></option>
@@ -66,7 +66,7 @@
             </div>
             <div class="mb-3">
   <label for="formFile" class="form-label">Avatar</label>
- <input class="form-control" type="file" id="avatarFile" accept=".png, .jpg, .jpeg">
+ <input class="form-control" type="file" id="avatarFile" name="avatar" accept=".png, .jpg, .jpeg">
 </div>
 <img style="max-height: 250px; display: none;" alt="avatar preview" id="avatarPreview" />
 
