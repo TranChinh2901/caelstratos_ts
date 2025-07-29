@@ -1,24 +1,32 @@
 
 import { prisma } from "../config/client";
 import { ACCOUNT_TYPE } from "../config/constant";
+import bcrypt from 'bcrypt';
+const saltRounds = 10;
 
+const hashPassword = async (plainText: string) => {
+  return await bcrypt.hash(plainText, saltRounds);
+}
 const handleUser = async (
     fullName: string, 
     email: string, 
     address: string,
     // role: string = "",
     avatar: string = "",
-    phone: string = ""
+    phone: string ,
+    role: string
 ) => {
+  const hashedPassword = await hashPassword("123456");
  await prisma.user.create({
     data: {
        fullName: fullName,
       username: email,
       address: address,
-      password: "123456",
+      password: hashedPassword,
       accoutType: ACCOUNT_TYPE.SYSTEM,
       avatar: avatar,
-      phone: phone
+      phone: phone,
+      roleId: +role
     }
   })
 };
@@ -28,7 +36,11 @@ const getAllRoles = async () => {
   
 }
 const getAllUsers = async () => {
-  const users = await prisma.user.findMany()
+  const users = await prisma.user.findMany({
+    include: {
+      role: true
+    }
+  })
   return users
 };
 const handleDeleteUser = async (id: string) => {
@@ -39,21 +51,39 @@ const handleDeleteUser = async (id: string) => {
 }
 const getUserById = async (id: string) => {
   const user = await prisma.user.findUnique({
-    where: { id: +id }
+    where: { id: +id },
+    include: {
+      role: true
+    }
   })
   return user;
 }
-const handleUpdateUser = async (id: string, fullName: string, email: string, address: string) => {
+const handleUpdateUser = async (
+  id: string, 
+  fullName: string, 
+  email: string, 
+  address: string,
+  avatar: string = "",
+  phone: string,
+  role: string
+) => {
+  const updateData: any = {
+    fullName: fullName,
+    username: email,
+    address: address,
+    phone: phone,
+    roleId: +role
+  };
+
+  // Chỉ update avatar nếu có file mới
+  if (avatar) {
+    updateData.avatar = avatar;
+  }
+
   const updateUser = await prisma.user.update({
     where: {id: +id},
-    data: {
-      fullName: fullName,
-      username: email,
-      address: address,
-      password: "",
-      accoutType: "",
-    }
+    data: updateData
   })
   return updateUser;
 }
-export { handleUser, getAllUsers,handleDeleteUser,getUserById, handleUpdateUser,getAllRoles };
+export { handleUser, getAllUsers,handleDeleteUser,getUserById, handleUpdateUser,getAllRoles, hashPassword };

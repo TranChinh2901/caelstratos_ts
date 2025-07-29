@@ -39,6 +39,7 @@
                 <th>Tên</th>
                 <th>Email</th>
                 <th>Địa chỉ</th>
+                <th>Role</th>
                 <th>Hành động</th>
             </tr>
         </thead>
@@ -49,15 +50,16 @@
       <td><%= user.fullName %></td>
       <td><%= user.username %></td>
       <td><%= user.address %></td>
+      <td><%= user.role ? user.role.name : 'No Role' %></td>
       <td>
         <div style="display: flex; gap: 10px;">
-          <form action="/handle-view-user/<%= user.id %>" method="GET">
+          <form action="/admin/view-user/<%= user.id %>" method="GET">
           <button type="submit" class="btn btn-warning">view</button>
         </form>
-         <form action="/handle-update-user/<%= user.id %>" method="GET">
+         <form action="/admin/update-user/<%= user.id %>" method="GET">
           <button type="submit" class="btn btn-primary">update</button>
         </form>
-        <form action="/handle-delete-user/<%= user.id %>" method="POST">
+        <form action="/admin/delete-user/<%= user.id %>" method="POST">
           <button type="submit" class="btn btn-danger">delete</button>
         </form>
         

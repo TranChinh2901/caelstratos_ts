@@ -19,38 +19,45 @@ const getCreateUserPage = async (req: Request, res: Response): Promise<void> => 
 }
 const createUser = async (req: Request, res: Response): Promise<void> => {
     const {fullname, username, phone, role, address} = req.body;
-    // console.log('Data from form:', req.body); 
     const file = req.file;
-    const avatar = file?.filename;
-    await handleUser(fullname, username, address, avatar, phone); 
-    res.redirect('/'); 
+    const avatar = file?.filename ?? '';
+    await handleUser(fullname, username, address, avatar, phone, role); 
+    res.redirect('/admin/user'); 
 }   
 const deleteUser = async (req: Request, res: Response): Promise<void> => {
     const {id} = req.params;
     await handleDeleteUser(id);
-    res.redirect('/');
-    console.log('Delete user with id:', id);
+    res.redirect('/admin/user');
+    // console.log('Delete user with id:', id);
 } 
 const viewUser = async (req: Request, res: Response): Promise<void> => {
     const {id} = req.params;
     const user = await getUserById(id);
-    console.log('User details:', user);
+     const roles = await getAllRoles();
+
+    // console.log('User details:', user);
     
     if (!user) {    
         res.status(404).send('Không tìm thấy người dùng');
         return;
     }
-    
-    res.render('view-user', {
-        user: user
+
+    res.render('admin/user/detail.ejs', {
+        id: id,
+        user: user,
+        roles
     });
 }
 
 
 const updateUser = async (req: Request, res: Response): Promise<void> => {
-    const {id, name, email, address} = req.body;
-    await handleUpdateUser(id, name, email, address);
-    res.redirect('/');
+    const {id} = req.params;
+    const {fullname, username, phone, role, address} = req.body;
+    const file = req.file;
+    const avatar = file?.filename ?? '';
+    
+    await handleUpdateUser(id, fullname, username, address, avatar, phone, role);
+    res.redirect('/admin/user');
 }
 
 const getUpdateUserForm = async (req: Request, res: Response): Promise<void> => {
