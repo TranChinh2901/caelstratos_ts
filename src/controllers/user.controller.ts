@@ -20,7 +20,9 @@ const getCreateUserPage = async (req: Request, res: Response): Promise<void> => 
 const createUser = async (req: Request, res: Response): Promise<void> => {
     const {fullname, username, phone, role, address} = req.body;
     // console.log('Data from form:', req.body); 
-    await handleUser(fullname, username, phone, role, address); 
+    const file = req.file;
+    const avatar = file?.filename;
+    await handleUser(fullname, username, address, avatar, phone); 
     res.redirect('/'); 
 }   
 const deleteUser = async (req: Request, res: Response): Promise<void> => {
