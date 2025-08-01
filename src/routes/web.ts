@@ -3,10 +3,12 @@ import { createUser, deleteUser, getCreateUserPage, getHomePage, getUpdateUserFo
 import { getAdminOrderPage, getAdminProductPage, getAdminUserPage, getDashboardPage } from 'controllers/admin/admin.controller';
 import multer from 'multer';
 import fileUploadMiddleware from 'src/middleware/multer';
+import { getProductPage } from 'controllers/client/product.controller';
 const upload = multer({ dest: 'uploads/' });
 const router = express.Router();
 
 router.get('/', getHomePage);
+router.get('/product/:id', getProductPage)
 
 
 //dashboard

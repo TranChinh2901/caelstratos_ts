@@ -3,11 +3,8 @@ import { getAllRoles, getAllUsers, getUserById, handleDeleteUser, handleUpdateUs
 
 
 const getHomePage = async (req: Request, res: Response): Promise<void> => {
-    const users = await getAllUsers();
-    // console.log('check users:', users);
-    res.render('home', { 
-        users: users
-    });
+
+    res.render('client/home/show.ejs');
 }
 const getCreateUserPage = async (req: Request, res: Response): Promise<void> => {
      const roles = await getAllRoles();
