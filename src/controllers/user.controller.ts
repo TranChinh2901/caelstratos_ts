@@ -55,7 +55,7 @@ const updateUser = async (req: Request, res: Response): Promise<void> => {
     const {fullname, username, phone, role, address} = req.body;
     const file = req.file;
     const avatar = file?.filename ?? '';
-    
+
     await handleUpdateUser(id, fullname, username, address, avatar, phone, role);
     res.redirect('/admin/user');
 }
