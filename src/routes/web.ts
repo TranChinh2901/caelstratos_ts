@@ -4,12 +4,12 @@ import { getAdminOrderPage, getAdminProductPage, getAdminUserPage, getDashboardP
 import multer from 'multer';
 import fileUploadMiddleware from 'src/middleware/multer';
 import { getProductPage } from 'controllers/client/product.controller';
-import { getAdminCreateProductPage } from 'controllers/admin/product.controller';
+import { getAdminCreateProductPage, postAdminCreateProduct } from 'controllers/admin/product.controller';
 const upload = multer({ dest: 'uploads/' });
 const router = express.Router();
 
 router.get('/', getHomePage);
-router.get('/product/123', getProductPage)
+router.get('/product/123', getProductPage)  
 
 
 //dashboard
@@ -23,7 +23,8 @@ router.get('/admin/update-user/:id', viewUser); // Sử dụng viewUser cho cả
 router.post('/admin/update-user/:id',fileUploadMiddleware("avatar"), updateUser);
 
 router.get('/admin/product', getAdminProductPage); 
-router.get('/admin/create-product', fileUploadMiddleware("image", "images/product"), getAdminCreateProductPage);
+router.get('/admin/create-product', getAdminCreateProductPage);
+router.post('/admin/create-product', fileUploadMiddleware("image", "images/product"), postAdminCreateProduct);
 
 router.get('/admin/order', getAdminOrderPage); 
 export default router;
