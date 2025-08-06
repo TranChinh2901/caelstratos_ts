@@ -39,8 +39,34 @@
             <th>Name</th>
             <th>Price</th>
             <th>Factory</th>
+            <th>Target</th>
             <th>Actions</th>
         </thead>
+        <tbody>
+             <% products.forEach(function(product) { %>
+    <tr>
+      <td><%= product.id %></td>
+      <td><%= product.name %></td>
+      <td><%= product.price %></td>
+      <td><%= product.factory %></td>
+      <td><%= product.target %></td>
+      <td>
+        <div style="display: flex; gap: 10px;">
+          <form action="/admin/view-product/<%= product.id %>" method="GET">
+          <button type="submit" class="btn btn-warning">view</button>
+        </form>
+         <form action="/admin/update-product/<%= product.id %>" method="GET">
+          <button type="submit" class="btn btn-primary">update</button>
+        </form>
+        <form action="/admin/delete-product/<%= product.id %>" method="POST">
+          <button type="submit" class="btn btn-danger">delete</button>
+        </form>
+        
+        </div>
+      </td>
+    </tr>
+  <% }) %>
+        </tbody>
     </table>
 </div>
 </div>
