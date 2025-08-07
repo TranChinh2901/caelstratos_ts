@@ -1,6 +1,6 @@
 
 import { Request, Response } from "express";
-import { createProduct, getProductById, handleDeleteProduct } from "services/admin/product.service";
+import { createProduct, getProductById, handleDeleteProduct, updateProductById } from "services/admin/product.service";
 import { handleDeleteUser } from "services/user.service";
 import { ProductSchema, TProductSchema } from "src/validation/product.schema";
 
@@ -107,10 +107,31 @@ const getViewProduct = async (req: Request, res: Response): Promise<void> => {
     });
 };
 
+const postUpdateProduct = async (req: Request, res: Response): Promise<void> => {
+    const {id, name, price, detailDesc, shortDesc, quantity, factory, target} = req.body as TProductSchema;
+    if (!id) {
+        res.status(400).send("Missing product ID");
+        return;
+    }
+    const image = req?.file?.filename || "";
+    await updateProductById(
+        +id,
+        name,
+        +price, 
+        detailDesc,
+        shortDesc,
+        +quantity,
+        factory,
+        target,
+        image
+    )   
+    return res.redirect('/admin/product');
+}
 
 export {
     getAdminCreateProductPage,
     postAdminCreateProduct,
     postDeleteProduct,
-    getViewProduct
+    getViewProduct,
+    postUpdateProduct
 }

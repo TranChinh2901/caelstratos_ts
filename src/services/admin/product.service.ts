@@ -1,3 +1,4 @@
+import { id } from "zod/v4/locales/index.cjs";
 import { prisma } from "../../config/client"
 
 
@@ -43,9 +44,37 @@ const getProductById = async (id: number) => {
         }
     })
 }
+
+const updateProductById = async (
+    id: number,
+    name: string,
+    price: number,
+    detailDesc: string,
+    shortDesc: string,
+    quantity: number,
+    factory: string,    
+    target: string,
+    imageUpload: string
+) => {
+    await prisma.product.update({
+        where: {id},
+        data: {
+            name,
+            price,
+            detailDesc,
+            shortDesc,                  
+            quantity,
+            factory,
+            target,
+            ...(imageUpload && {image: imageUpload}) 
+        }
+    })
+}
+
 export {
     createProduct,
     getProductList,
     handleDeleteProduct,
-    getProductById
+    getProductById,
+    updateProductById
 }

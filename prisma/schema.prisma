@@ -24,7 +24,7 @@ model User {
   phone       String?   @db.VarChar(255)
   accoutType  String    @db.VarChar(50)
   avatar      String?   @db.VarChar(255) 
-  role        Role     @relation(fields: [roleId], references: [id])
+  role        Role      @relation(fields: [roleId], references: [id])
   roleId      Int
 }
 
@@ -38,7 +38,7 @@ model Role {
 
 model Order {
   @@map("orders")
-  id            Int       @id @default(autoincrement())
+  id            Int     @id @default(autoincrement())
   totalPrice    Int
 }
 
@@ -47,11 +47,11 @@ model Product {
   id          Int       @id @default(autoincrement())
   name        String    @db.VarChar(255)
   price       Int
-  image       String?    @db.VarChar(255)
-  detailDesc  String    @db.VarChar(255)
+  image       String?   @db.VarChar(255)
+  detailDesc  String    @db.MediumText
   shortDesc   String    @db.VarChar(255)
   quantity    Int
-  sold        Int?       @default(0)
+  sold        Int?      @default(0)
   factory     String    @db.VarChar(255) 
   target      String    @db.VarChar(255) 
 }
