@@ -1,6 +1,6 @@
 import { ACCOUNT_TYPE } from "../../config/constant";
 import { prisma } from "../../config/client";
-import { hashPassword } from "services/user.service";
+import { comparePassword, hashPassword } from "services/user.service";
 
 
 const isEmailExist = async (email: string): Promise<boolean> => {

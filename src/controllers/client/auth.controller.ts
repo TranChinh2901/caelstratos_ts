@@ -11,7 +11,13 @@ const getRegisterPage = async (req: Request, res: Response): Promise<void> => {
     });
 }
 const getLoginPage = async (req: Request, res: Response): Promise<void> => {
-    return res.render('client/auth/login.ejs');
+    const {session} = req as any;
+    const messages = session?.messages ?? [];
+    return res.render('client/auth/login.ejs',
+        {
+            messages
+        }
+    );
 }
 const postRegister = async (req: Request, res: Response): Promise<void> => {
     const { fullName, email, password, confirmPassword } = req.body as TRegisterSchema;
