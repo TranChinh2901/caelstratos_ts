@@ -6,6 +6,8 @@ import { getProducts } from 'services/client/item.service';
 const getHomePage = async (req: Request, res: Response): Promise<void> => {
     const products = await getProducts();
     const user = req.user;
+    console.log('User in home page:', user);
+    
     res.render('client/home/show.ejs', {
         message: 'Trang chủ',
         products

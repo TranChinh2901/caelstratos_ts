@@ -7,12 +7,13 @@ import { getProductPage } from 'controllers/client/product.controller';
 import { getAdminCreateProductPage, getViewProduct, postAdminCreateProduct, postDeleteProduct, postUpdateProduct } from 'controllers/admin/product.controller';
 import { getLoginPage, getRegisterPage, postRegister } from 'controllers/client/auth.controller';
 import passport from 'passport';
+import { isLogin } from 'src/middleware/auth';
 const upload = multer({ dest: 'uploads/' });
 const router = express.Router();
 
 router.get('/', getHomePage);
 router.get('/product/:id', getProductPage);
-router.get('/login', getLoginPage);
+router.get('/login', isLogin, getLoginPage);
 router.post('/login', passport.authenticate('local', {
   successRedirect: '/',
   failureRedirect: '/login',

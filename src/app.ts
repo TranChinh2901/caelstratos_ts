@@ -7,6 +7,8 @@ import initDatabase from './config/seed';
 import passport from 'passport';
 import configPassportLocal from './middleware/passport.local';
 import session from 'express-session';
+import { PrismaSessionStore } from '@quixo3/prisma-session-store';
+import { PrismaClient } from '@prisma/client';
 
 
 
@@ -19,14 +21,32 @@ app.use(express.static('public'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(session({
-  secret: 'keyboard cat',
-  resave: false,
-  saveUninitialized: true
+  cookie: {
+     maxAge: 7 * 24 * 60 * 60 * 1000 // ms
+    },
+    secret: 'a santa at nasa',
+    //resave: true, nếu muốn lưu vào database
+    resave: false,
+    //save unmodified session 
+    saveUninitialized: false,
+    store: new PrismaSessionStore(
+      new PrismaClient(),
+      {
+        checkPeriod: 2 * 60 * 1000,  //ms
+        dbRecordIdIsSessionId: true,
+        dbRecordIdFunction: undefined,
+      }
+    )
 }))
 app.use(passport.initialize());
 app.use(passport.authenticate('session'));
 
 configPassportLocal()
+//config global 
+app.use((req, res, next) => {
+    res.locals.user = req.user || null; // Pass user object to all views
+    next();
+});
 // Sử dụng router
 app.use('/', webRoutes);
 getConnection()
