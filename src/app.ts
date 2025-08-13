@@ -1,3 +1,4 @@
+/// <reference path="./types/index.d.ts" />
 import express, { Request, Response } from 'express';
 import path from 'path';
 import 'dotenv/config';
@@ -54,7 +55,7 @@ getConnection()
 initDatabase()
 
 app.use((req, res) => {
-  res.send('404 Not Found');
+  res.render("status/404")
 })
 app.listen(PORT, () => {
   console.log(`Server is running on port http://localhost:${PORT}`);

@@ -55,9 +55,9 @@ const handleDeleteUser = async (id: string) => {
 const getUserById = async (id: string) => {
   const user = await prisma.user.findUnique({
     where: { id: +id },
-    include: {
-      role: true
-    }
+    // include: {
+    //   role: true
+    // }
   })
   return user;
 }
