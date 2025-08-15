@@ -1,10 +1,35 @@
 import { Request, Response } from "express";
-import { getProductById } from "services/client/item.service";
+import { addProductToCart, getProductById, getProductInCart } from "services/client/item.service";
 
 const getProductPage = async (req: Request, res: Response): Promise<void> => {
-    const { id } = req.params;
-    const product = await getProductById(+id);
-    return res.render('client/product/detail.ejs', { product });
+  const { id } = req.params;
+  const product = await getProductById(+id);
+  return res.render("client/product/detail.ejs", { product });
+};
+const postAddProductToCart = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  const { id } = req.params;
+  const user = req.user;
+  if (user) {
+    await addProductToCart(1, +id, user);
+  } else {
+    return res.redirect("/login");
+  }
+
+  return res.redirect("/");
+};
+
+const getCartPage = async (req: Request, res: Response): Promise<void> => {
+  const user = req.user;
+  if(!user) {
+    return res.redirect("/login");
+  }
+  const cartDetails = await getProductInCart(+user.id);
+
+  const totalPrice = cartDetails?.map(item => +item.price * +item.quantity)?.reduce((a, b) => a + b, 0) || 0;
+  return res.render("client/product/cart.ejs", { cartDetails, totalPrice });
 }
 
-export { getProductPage };
+export { getProductPage, postAddProductToCart, getCartPage };

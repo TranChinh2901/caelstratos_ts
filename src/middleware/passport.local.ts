@@ -35,7 +35,7 @@ passport.serializeUser(function(user:any, callback) {
 passport.deserializeUser(async function(user:any, callback) {
     const { id, username } = user;
     //query to database
-    const userInDB = await getUserWithRoleId(id);
+    const userInDB: any = await getUserWithRoleId(id);
     return callback(null, {...userInDB});
 });
 }

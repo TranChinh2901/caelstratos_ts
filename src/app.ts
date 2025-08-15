@@ -49,7 +49,8 @@ app.use((req, res, next) => {
     next();
 });
 // Sử dụng router
-app.use('/', webRoutes);
+// app.use('/', webRoutes);
+webRoutes(app);
 getConnection()
 
 initDatabase()
