@@ -31,7 +31,7 @@ if(cart) {
             sum: quantity,
             userId: user.id,
             cartDetails: {
-                create: [
+                create: [ 
                  {
                     price: product?.price || 0,
                     quantity: quantity,
