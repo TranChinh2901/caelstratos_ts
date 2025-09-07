@@ -5,8 +5,8 @@ import z from "zod";
 
 const passwordSchema = z 
     .string()
-    .min(6, { message: 'Password must be at least 6 characters long' })
-    .max(20, { message: 'Password must not exceed 20 characters' });
+    .min(6, { message: 'Mật khẩu ít nhất phải đủ 6 ký  tự' })
+    .max(20, { message: 'Mật khẩu không được vượt quá 20 ký tự' });
 
 const emailSchema = z
     .string()

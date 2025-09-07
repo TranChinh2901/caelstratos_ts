@@ -53,6 +53,7 @@ const webRoutes = (app: Express) => {
 
   router.get("/register", getRegisterPage);
   router.post("/register", postRegister);
+  
   router.get("/cart", getCartPage)
   router.post("/add-product-to-cart/:id", postAddProductToCart);
 
